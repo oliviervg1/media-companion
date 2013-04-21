@@ -4,3 +4,15 @@
 .project
 
 *.prefs
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Added #
+*.DS_Store
+.settings/
+[Tt]arget/
