@@ -5,7 +5,7 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Media Player</name>
-  <description>Companion app for Home Automation project</description>
+  <description>Media Player</description>
   
   <!-- BUILD PROPERTIES -->
 	<properties>
@@ -79,12 +79,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
 					<verbose>true</verbose>
-					<compilerVersion>1.6</compilerVersion>
+					<compilerVersion>1.7</compilerVersion>
 				</configuration>
 			</plugin>
 		
