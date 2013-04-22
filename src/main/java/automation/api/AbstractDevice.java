@@ -38,7 +38,8 @@ public abstract class AbstractDevice implements ConnectedDevice{
 			if (ret == null) {
 				ret = 0;
 			}			
-		} catch (SecurityException | IllegalAccessException | InvocationTargetException e) {
+		//} catch (SecurityException | IllegalAccessException | InvocationTargetException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}   
