@@ -55,4 +55,8 @@ public class MediaPlayer extends AbstractDevice{
 	public void close() {
 		player.close();
 	}
+	
+	public String getPlayingFile() {
+		return player.getPlayingFile();
+	}
 }

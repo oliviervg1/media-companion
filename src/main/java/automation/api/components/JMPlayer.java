@@ -119,9 +119,9 @@ public class JMPlayer {
         }
     }
 
-    public File getPlayingFile() {
+    public String getPlayingFile() {
         String path = getProperty("path");
-        return path == null ? null : new File(path);
+        return path == null ? null : path;
     }
 
     public void togglePlay() {
