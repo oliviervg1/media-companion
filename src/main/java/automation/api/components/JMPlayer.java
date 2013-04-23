@@ -1,4 +1,4 @@
-package com.pi.media;
+package automation.api.components;
 
 import java.io.*;
 import java.util.logging.Logger;
@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 /**
  * A player which is actually an interface to the famous MPlayer.
- * @author Adrian BER
+ * @author Adrian BER - Mods: Olivier Van Goethem
  */
 public class JMPlayer {
 
@@ -53,9 +53,9 @@ public class JMPlayer {
     }
 
     /** The path to the MPlayer executable. */
-    private String mplayerPath = "/Users/olivier/Downloads/MPlayer-1.1/mplayer";
+    private String mplayerPath;
     /** Options passed to MPlayer. */
-    private String mplayerOptions = "-slave -idle";
+    private String mplayerOptions;
 
     /** The process corresponding to MPlayer. */
     private Process mplayerProcess;
@@ -64,7 +64,9 @@ public class JMPlayer {
     /** A combined reader for the the standard output and error of MPlayer. Used to read MPlayer responses. */
     private BufferedReader mplayerOutErr;
 
-    public JMPlayer() {
+    public JMPlayer(String mplayerPath, String mplayerOptions) {
+    	this.mplayerPath = mplayerPath;
+    	this.mplayerOptions = mplayerOptions;
     }
 
     /** @return the path to the MPlayer executable. */
@@ -88,7 +90,6 @@ public class JMPlayer {
             mplayerProcess = Runtime.getRuntime().exec(command);
 
             // create the piped streams where to redirect the standard output and error of MPlayer
-            // specify a bigger pipesize
             PipedInputStream  readFrom = new PipedInputStream(1024*1024);
             PipedOutputStream writeTo = new PipedOutputStream(readFrom);
             mplayerOutErr = new BufferedReader(new InputStreamReader(readFrom));
@@ -100,7 +101,7 @@ public class JMPlayer {
             // the standard input of MPlayer
             mplayerIn = new PrintStream(mplayerProcess.getOutputStream());
         } else {
-            execute("loadfile \"" + file + "\" 0");
+            execute("loadfile " + file + " 0");
         }
         // wait to start playing
         waitForAnswer("Starting playback...");
@@ -150,6 +151,14 @@ public class JMPlayer {
     public void setVolume(float volume) {
         setProperty("volume", volume);
     }
+    
+    public void setFullScreen(boolean value) {
+        if (value) {
+        	execute("vo_fullscreen " + 1);
+        } else {
+        	execute("vo_fullscreen " + 0);
+        }
+    }
 
     protected String getProperty(String name) {
         if (name == null || mplayerProcess == null) {
@@ -192,10 +201,6 @@ public class JMPlayer {
 
     protected void setProperty(String name, float value) {
         execute("set_property " + name + " " + value);
-    }
-    
-    protected void setFullScreen(int value) {
-        execute("vo_fullscreen " + value);
     }
 
     /** Sends a command to MPlayer..

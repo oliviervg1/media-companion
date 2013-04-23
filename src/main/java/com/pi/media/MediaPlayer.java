@@ -2,37 +2,57 @@ package com.pi.media;
 
 import java.io.IOException;
 
-public class MediaPlayer {
+import javax.jws.WebService;
+
+import automation.api.AbstractDevice;
+import automation.api.components.JMPlayer;
+
+@WebService(endpointInterface = "automation.api.interfaces.ConnectedDevice")
+public class MediaPlayer extends AbstractDevice{
 	
 	private JMPlayer player;
+	float volume;
 	
-	public MediaPlayer() {
-		player = new JMPlayer();
+	@Override
+	protected void onStartup() {
+		player = new JMPlayer("/Users/olivier/Downloads/MPlayer-1.1/mplayer", "-slave -idle");
+		volume = 80;
 	}
 	
 	public void playTrack(String fileToPlay) {
-		if (player.isPlaying()) {
-			player.close();
-		}
-		
 		try {
 			player.open(fileToPlay);
-			player.setFullScreen(1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			player.setVolume(volume);
+			player.setFullScreen(true);
+		} catch (IOException e) {}
 	}
 	
-	public static void main(String[] args) {
-//		try {
-//			Runtime.getRuntime().exec("/Users/olivier/Downloads/MPlayer-1.1/mplayer");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		MediaPlayer mediaPlayer = new MediaPlayer();
-		mediaPlayer.playTrack("http://www.stuart-holland.com:8080/uploads/American.Dad.S08E16.HDTV.x264-LOL.mp4");
-		
+	public void togglePlay() {
+		player.togglePlay();
+	}
+	
+	public void setVolume(float volume) {
+		this.volume = volume;
+		player.setVolume(volume);
+	}
+	
+	public float getVolume() {
+		return player.getVolume();
+	}
+	
+	public void setTimePosition(long seconds) {
+		player.setTimePosition(seconds);
+	}
+	
+	public long getTimePosition() {
+		return player.getTimePosition();
+	}
+	
+	public long getTotalTime() {
+		return player.getTotalTime();
+	}
+	
+	public void close() {
+		player.close();
 	}
 }

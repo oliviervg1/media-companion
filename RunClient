@@ -1,0 +1,6 @@
+#
+# Script to run media-control
+#
+
+cd target/
+sudo java -classpath classes:./'*' TestClient

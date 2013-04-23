@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.mediaClient</groupId>
   <artifactId>media-control</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>war</packaging>
   <name>Media Player</name>
   <description>Media Player</description>
@@ -47,12 +47,6 @@
   			<groupId>org.jmock</groupId>
   			<artifactId>jmock-junit4</artifactId>
   			<version>2.6.0-RC2</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>uk.co.caprica</groupId>
-		    <artifactId>vlcj</artifactId>
-		    <version>2.2.0</version>
 		</dependency>
 	</dependencies>
 
