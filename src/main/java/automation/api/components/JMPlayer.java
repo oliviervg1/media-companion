@@ -121,7 +121,7 @@ public class JMPlayer {
 
     public String getPlayingFile() {
         String path = getProperty("path");
-        return path == null ? null : path;
+        return path == null ? "Not in use!" : path;
     }
 
     public void togglePlay() {

@@ -20,6 +20,9 @@ public class MediaPlayer extends AbstractDevice{
 	}
 	
 	public void playTrack(String fileToPlay) {
+		if (player.isPlaying()) {
+			player.close();
+		}
 		try {
 			player.open(fileToPlay);
 			player.setVolume(volume);

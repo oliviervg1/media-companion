@@ -6,7 +6,7 @@ import automation.api.interfaces.ConnectedDevice;
 
 public class TestClient{
  
-	private static final String WS_URL = "http://localhost:8080/media-control/MediaPlayer?wsdl";
+	private static final String WS_URL = "http://192.168.0.4:8080/media-control-1.0.0/MediaPlayer?wsdl";
  
 	public static void main(String[] args) throws Exception {
  
@@ -21,7 +21,9 @@ public class TestClient{
         	String event = System.console().readLine();
         	
         	if (event.equalsIgnoreCase("play")) {
-        		Object parameters[] = {"http://www.stuart-holland.com:8080/uploads/Hunger%20Game.mp4"};
+        		String fileToPlay = "http://www.stuart-holland.com:8080/uploads/Hunger Game.mp4";
+        		fileToPlay = fileToPlay.replace(" ", "%20");
+        		Object parameters[] = {fileToPlay};
         		mediaPlayer.invokeMethod("playTrack", parameters);
         	}
         	if (event.equalsIgnoreCase("pause")) {
