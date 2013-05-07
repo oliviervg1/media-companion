@@ -6,7 +6,7 @@ import automation.api.interfaces.ConnectedDevice;
 
 public class TestClient{
  
-	private static final String WS_URL = "http://192.168.0.4:8080/media-control-1.0.0/MediaPlayer?wsdl";
+	private static final String WS_URL = "http://192.168.0.4:8080/media-companion-1.0.0/MediaPlayer?wsdl";
  
 	public static void main(String[] args) throws Exception {
  
