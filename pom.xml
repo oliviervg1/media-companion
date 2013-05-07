@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mediaClient</groupId>
-  <artifactId>media-control</artifactId>
+  <groupId>com.pi.automation</groupId>
+  <artifactId>media-companion</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
-  <name>Media Player</name>
-  <description>Media Player</description>
+  <name>Media Companion App</name>
+  <description>Raspberry Pi - Media Player</description>
   
   <!-- BUILD PROPERTIES -->
 	<properties>
