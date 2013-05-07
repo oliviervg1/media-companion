@@ -15,7 +15,7 @@ public class MediaPlayer extends AbstractDevice{
 	
 	@Override
 	protected void onStartup() {
-		player = new JMPlayer("/Users/olivier/Downloads/MPlayer-1.1/mplayer", "-slave -idle");
+		player = new JMPlayer("/Users/olivier/Downloads/MPlayer-1.1/", "-slave -idle", "/var/tmp/youtube-dl-cookies.txt");
 		volume = 80;
 	}
 	

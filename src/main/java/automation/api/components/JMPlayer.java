@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 /**
  * A player which is actually an interface to the famous MPlayer.
- * @author Adrian BER - Mods: Olivier Van Goethem
+ * @author Adrian BER - Modifications: Olivier Van Goethem
  */
 public class JMPlayer {
 
@@ -54,6 +54,8 @@ public class JMPlayer {
 
     /** The path to the MPlayer executable. */
     private String mplayerPath;
+    /** Cookie file location for use with youtube-dl*/
+    private String youtubeCookieFile; 
     /** Options passed to MPlayer. */
     private String mplayerOptions;
 
@@ -64,9 +66,10 @@ public class JMPlayer {
     /** A combined reader for the the standard output and error of MPlayer. Used to read MPlayer responses. */
     private BufferedReader mplayerOutErr;
 
-    public JMPlayer(String mplayerPath, String mplayerOptions) {
+    public JMPlayer(String mplayerPath, String mplayerOptions, String youtubeCookieFile) {
     	this.mplayerPath = mplayerPath;
-    	this.mplayerOptions = mplayerOptions;
+    	this.mplayerOptions = mplayerOptions + " -cache 2048 -cache-min 5";
+    	this.youtubeCookieFile = youtubeCookieFile;
     }
 
     /** @return the path to the MPlayer executable. */
@@ -85,9 +88,16 @@ public class JMPlayer {
     public void open(String file) throws IOException {
         if (mplayerProcess == null) {
             // start MPlayer as an external process
-            String command = mplayerPath + " " + mplayerOptions + " " + file;
+            String command;
+        	if (file.contains("www.youtube.com")) {
+            	String youtubeParser = youtubeCookieFile + " $(" + mplayerPath + "youtube-dl -f 22/18 -g --cookies " + youtubeCookieFile + " " + file + ")";
+        		String mplayerCommand = mplayerPath + "mplayer " + mplayerOptions + " -cookies -cookies-file";
+        		command = mplayerCommand + " " + youtubeParser;
+        	} else {
+            	command = mplayerPath + "mplayer " + mplayerOptions + " " + file;
+            }
             logger.info("Starting MPlayer process: " + command);
-            mplayerProcess = Runtime.getRuntime().exec(command);
+            mplayerProcess = Runtime.getRuntime().exec(new String[] {"bash", "-c", command});
 
             // create the piped streams where to redirect the standard output and error of MPlayer
             PipedInputStream  readFrom = new PipedInputStream(1024*1024);
@@ -101,7 +111,15 @@ public class JMPlayer {
             // the standard input of MPlayer
             mplayerIn = new PrintStream(mplayerProcess.getOutputStream());
         } else {
-            execute("loadfile " + file + " 0");
+            // If youtube video - restart MPlayer (avoids having to inject stream with youtube-dl)
+        	if (file.contains("www.youtube.com")) {
+            	close();
+            	open(file);
+            }
+        	// Else just open file normally
+        	else {
+	        	execute("loadfile " + file + " 0");
+        	}
         }
         // wait to start playing
         waitForAnswer("Starting playback...");
