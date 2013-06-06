@@ -8,10 +8,10 @@ import automation.api.AbstractDevice;
 import automation.api.components.JMPlayer;
 
 @WebService(endpointInterface = "automation.api.interfaces.ConnectedDevice")
-public class MediaPlayer extends AbstractDevice{
+public class MediaPlayer extends AbstractDevice {
 	
 	private JMPlayer player;
-	float volume;
+	private float volume;
 	
 	@Override
 	protected void onStartup() {
